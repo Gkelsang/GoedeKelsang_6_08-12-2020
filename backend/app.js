@@ -6,6 +6,7 @@ const path = require('path');
 const saucesRoutes = require('./routes/sauce');
 const userRoutes = require ('./routes/user');
 
+// ----- Connection à MongoDB ----- // 
 
 mongoose.connect('mongodb+srv://gkelsang:Projet6oc@cluster0.gjcfn.mongodb.net/gkelsang?retryWrites=true&w=majority',
   { useCreateIndex:true,
@@ -16,6 +17,9 @@ mongoose.connect('mongodb+srv://gkelsang:Projet6oc@cluster0.gjcfn.mongodb.net/gk
 
 const app = express();
 
+// ----- Réglage des erreurs de Cross Origin Resource Sharing ----- //
+// ----- Permet au Front et au Back de communiquer en sécurité ----- //
+
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content, Accept, Content-Type, Authorization');
@@ -23,7 +27,9 @@ app.use((req, res, next) => {
     next();
   });
 
+ // ----- Analyse le texte URL des données codées et expose l'objet résultant, req.body  ----- //
 app.use(bodyParser.urlencoded({ extended: true }));  
+ // ----- Analyse le texte JSON et expose l'objet résultant sur req.body ----- //
 app.use(bodyParser.json());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));

@@ -1,9 +1,11 @@
+// ----- Crypte le mot de passe et le transforme en token ----- //
 const bcrypt = require('bcrypt');
 const jwt = require ('jsonwebtoken');
 
+// ----- Importe notre modèle d'utilisateur ----- // 
 const User = require('../models/User');
 
-
+// ----- Permet de créer un compte ----- //
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
     .then(hash => {
@@ -18,12 +20,14 @@ exports.signup = (req, res, next) => {
     .catch(error => res.status(500).json({ error }));
 };
 
+// ----- Permet de se connecter avec un compte existant ----- //
 exports.login = (req, res, next) => {
     User.findOne({ email: req.body.email })
       .then(user => {
         if (!user) {
           return res.status(401).json({ error: 'Utilisateur non trouvé !' });
         }
+        // ----- Compare le mdp entré et le mdp dans la base de données ----- //
         bcrypt.compare(req.body.password, user.password)
           .then(valid => {
             if (!valid) {
