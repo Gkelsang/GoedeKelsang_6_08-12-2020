@@ -10,3 +10,4 @@ So Pekocko
 - Une fois dans le dossier frontend veuillez lancer la commande "npm start"
 - L'application devrait vous indiquer "compiled successfully" et vous donner le port par défault à ouvrir http://localhost:4200/
 
+Vous aurez besoin du fichier .env
