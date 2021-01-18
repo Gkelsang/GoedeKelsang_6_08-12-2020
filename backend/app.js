@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const path = require('path');
+const helmet = require('helmet');
 
 const saucesRoutes = require('./routes/sauce');
 const userRoutes = require ('./routes/user');
@@ -30,8 +31,9 @@ app.use((req, res, next) => {
 
  // ----- Analyse le texte URL des données codées et expose l'objet résultant, req.body  ----- //
 app.use(bodyParser.urlencoded({ extended: true }));  
- // ----- Analyse le texte JSON et expose l'objet résultant sur req.body ----- //
+ // ----- Analyse le texte JSON et expose l'objet résultant sur req.body ----- // 
 app.use(bodyParser.json());
+app.use(helmet());
 
 app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use('/api/sauces', saucesRoutes);
